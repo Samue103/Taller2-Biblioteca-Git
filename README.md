@@ -1,6 +1,6 @@
 ##Sistema de Gestión de Biblioteca
 
-Taller 1 - Programación de Computadores III - UPC
+Taller 2 - Programación de Computadores III - UPC
 
 ## Autor
 
