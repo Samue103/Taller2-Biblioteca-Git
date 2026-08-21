@@ -17,12 +17,170 @@ public class Main {
     static ArrayList<Libro> libros = new ArrayList<>();
     static ArrayList<Prestamo> prestamos = new ArrayList<>();
 
-
-
     public static void main(String[] args) {
-        // Aquí irá el menú (Fase 8)
+        int opcionPrincipal = 0;
+
+        do {
+            System.out.println("\n==========================================");
+            System.out.println("     SISTEMA DE GESTIÓN DE BIBLIOTECA     ");
+            System.out.println("==========================================");
+            System.out.println("1. Gestión de Clientes");
+            System.out.println("2. Gestión de Libros");
+            System.out.println("3. Gestión de Préstamos");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcionPrincipal = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                opcionPrincipal = -1;
+            }
+
+            switch (opcionPrincipal) {
+                case 1:
+                    menuClientes();
+                    break;
+                case 2:
+                    menuLibros();
+                    break;
+                case 3:
+                    menuPrestamos();
+                    break;
+                case 4:
+                    System.out.println("\n¡Gracias por usar el sistema de biblioteca!");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Intente de nuevo.");
+            }
+        } while (opcionPrincipal != 4);
     }
-     public static void crearCliente() {
+
+    // --- SUBMENÚS DE NAVEGACIÓN ---
+    private static void menuClientes() {
+        int opcion = 0;
+        do {
+            System.out.println("\n--- SUBMENÚ: GESTIÓN DE CLIENTES ---");
+            System.out.println("1. Crear Cliente");
+            System.out.println("2. Listar Clientes");
+            System.out.println("3. Buscar Cliente");
+            System.out.println("4. Actualizar Cliente");
+            System.out.println("5. Eliminar Cliente");
+            System.out.println("6. Volver al Menú Principal");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1:
+                    crearCliente();
+                    break;
+                case 2:
+                    listarClientes();
+                    break;
+                case 3:
+                    buscarCliente();
+                    break;
+                case 4:
+                    actualizarCliente();
+                    break;
+                case 5:
+                    eliminarCliente();
+                    break;
+                case 6:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcion != 6);
+    }
+
+    private static void menuLibros() {
+        int opcion = 0;
+        do {
+            System.out.println("\n--- SUBMENÚ: GESTIÓN DE LIBROS ---");
+            System.out.println("1. Crear Libro");
+            System.out.println("2. Listar Libros");
+            System.out.println("3. Buscar Libro");
+            System.out.println("4. Actualizar Libro");
+            System.out.println("5. Eliminar Libro");
+            System.out.println("6. Volver al Menú Principal");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1:
+                    crearLibro();
+                    break;
+                case 2:
+                    listarLibros();
+                    break;
+                case 3:
+                    System.out.print("Ingrese el código a buscar: ");
+                    String cod = sc.nextLine();
+                    Libro l = buscarLibro(cod);
+                    System.out.println(l != null ? l : "Libro no encontrado.");
+                    break;
+                case 4:
+                    actualizarLibro();
+                    break;
+                case 5:
+                    eliminarLibro();
+                    break;
+                case 6:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcion != 6);
+    }
+
+    private static void menuPrestamos() {
+        int opcion = 0;
+        do {
+            System.out.println("\n--- SUBMENÚ: GESTIÓN DE PRÉSTAMOS ---");
+            System.out.println("1. Registrar Préstamo");
+            System.out.println("2. Registrar Devolución");
+            System.out.println("3. Listar Préstamos Activos");
+            System.out.println("4. Volver al Menú Principal");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1:
+                    crearPrestamo();
+                    break;
+                case 2:
+                    devolucion();
+                    break;
+                case 3:
+                    listarPrestamos();
+                    break;
+                case 4:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        } while (opcion != 4);
+    }
+
+    public static void crearCliente() {
         System.out.println("\n--- CREAR CLIENTE ---");
         System.out.print("Ingrese ID: ");
         String id = sc.nextLine();
@@ -37,7 +195,8 @@ public class Main {
         clientes.add(nuevoCliente);
         System.out.println("¡Cliente registrado con éxito!");
     }
-     public static void listarClientes() {
+
+    public static void listarClientes() {
         System.out.println("\n--- LISTA DE CLIENTES ---");
         if (clientes.isEmpty()) {
             System.out.println("No hay clientes registrados en el sistema.");
@@ -47,7 +206,8 @@ public class Main {
             System.out.println("ID: " + c.getId() + " | Nombre: " + c.getNombre() + " | Teléfono: " + c.getTelefono() + " | Email: " + c.getEmail());
         }
     }
-     public static void buscarCliente() {
+
+    public static void buscarCliente() {
         System.out.println("\n--- BUSCAR CLIENTE ---");
         System.out.print("Ingrese el ID del cliente a buscar: ");
         String idBusqueda = sc.nextLine();
@@ -64,7 +224,8 @@ public class Main {
         }
         System.out.println("Cliente no encontrado.");
     }
-     public static void actualizarCliente() {
+
+    public static void actualizarCliente() {
         System.out.println("\n--- ACTUALIZAR CLIENTE ---");
         System.out.print("Ingrese el ID del cliente a modificar: ");
         String idBusqueda = sc.nextLine();
@@ -83,7 +244,8 @@ public class Main {
         }
         System.out.println("Cliente no encontrado.");
     }
-     public static void eliminarCliente() {
+
+    public static void eliminarCliente() {
         System.out.println("\n--- ELIMINAR CLIENTE ---");
         System.out.print("Ingrese el ID del cliente a eliminar: ");
         String idBusqueda = sc.nextLine();
@@ -97,7 +259,8 @@ public class Main {
         }
         System.out.println("Cliente no encontrado.");
     }
-     public static void crearLibro() {
+
+    public static void crearLibro() {
 
         System.out.println("\n--- CREAR LIBRO ---");
 
@@ -119,7 +282,8 @@ public class Main {
 
         System.out.println("Libro creado correctamente.");
     }
-     public static void listarLibros() {
+
+    public static void listarLibros() {
 
         System.out.println("\n--- LISTA DE LIBROS ---");
 
@@ -132,7 +296,8 @@ public class Main {
             System.out.println(libro);
         }
     }
-     public static Libro buscarLibro(String codigo) {
+
+    public static Libro buscarLibro(String codigo) {
 
         for (Libro libro : libros) {
 
@@ -143,7 +308,8 @@ public class Main {
 
         return null;
     }
-      public static void actualizarLibro() {
+
+    public static void actualizarLibro() {
 
         System.out.println("\n--- ACTUALIZAR LIBRO ---");
 
@@ -172,7 +338,8 @@ public class Main {
 
         System.out.println("Libro actualizado correctamente.");
     }
-       public static void eliminarLibro() {
+
+    public static void eliminarLibro() {
 
         System.out.println("\n--- ELIMINAR LIBRO ---");
 
@@ -190,7 +357,8 @@ public class Main {
 
         System.out.println("Libro eliminado correctamente.");
     }
-       public static void crearPrestamo() {
+
+    public static void crearPrestamo() {
 
         System.out.println("\n--- REGISTRAR PRÉSTAMO ---");
 
@@ -227,7 +395,8 @@ public class Main {
 
         System.out.println("Préstamo registrado correctamente.");
     }
-       public static void devolucion() {
+
+    public static void devolucion() {
 
         System.out.println("\n--- DEVOLUCIÓN DE LIBRO ---");
 
@@ -248,23 +417,24 @@ public class Main {
 
         System.out.println("No se encontró un préstamo activo para ese libro.");
     }
-       public static void listarPrestamos() {
- 
-    System.out.println("\n--- PRÉSTAMOS ACTIVOS ---");
- 
-    boolean hayPrestamosActivos = false;
- 
-    for (Prestamo prestamo : prestamos) {
- 
-        if (prestamo.isActivo()) {
-            System.out.println(prestamo);
-            hayPrestamosActivos = true;
+
+    public static void listarPrestamos() {
+
+        System.out.println("\n--- PRÉSTAMOS ACTIVOS ---");
+
+        boolean hayPrestamosActivos = false;
+
+        for (Prestamo prestamo : prestamos) {
+
+            if (prestamo.isActivo()) {
+                System.out.println(prestamo);
+                hayPrestamosActivos = true;
+            }
         }
-    }
- 
-    if (!hayPrestamosActivos) {
-        System.out.println("No hay préstamos activos.");
-    }
+
+        if (!hayPrestamosActivos) {
+            System.out.println("No hay préstamos activos.");
+        }
     }
 
 }
