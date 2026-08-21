@@ -130,5 +130,16 @@ public class Main {
             System.out.println(libro);
         }
     }
+     public static Libro buscarLibro(String codigo) {
+
+        for (Libro libro : libros) {
+
+            if (libro.getCodigo().equalsIgnoreCase(codigo)) {
+                return libro;
+            }
+        }
+
+        return null;
+    }
 
 }
